@@ -1,0 +1,22 @@
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        m, n = len(nums1), len(nums2)
+        total_len = m + n
+        
+        p1, p2 = 0, 0
+        prev = curr = 0
+        
+        # Iterate until reaching the median index
+        for _ in range(total_len // 2 + 1):
+            prev = curr
+            if p1 < m and (p2 >= n or nums1[p1] <= nums2[p2]):
+                curr = nums1[p1]
+                p1 += 1
+            else:
+                curr = nums2[p2]
+                p2 += 1
+        
+        # If total elements are odd, return curr; if even, return average of prev and curr
+        if total_len % 2 == 1:
+            return float(curr)
+        return (prev + curr) / 2.0
